@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: hospital-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: hospital_db
+      MYSQL_USER: hospital
+      MYSQL_PASSWORD: hospital123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - hospital-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: hospital-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/hospital_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: hospital
+      SPRING_DATASOURCE_PASSWORD: hospital123
+      APP_JWT_SECRET: hospitalSecretKeyThatShouldBeAtLeast256BitsLongForHS256Algorithm
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - hospital-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  hospital-network:
+    driver: bridge
