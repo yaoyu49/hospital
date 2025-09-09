@@ -44,5 +44,5 @@ logging:
 
 app:
   jwt:
-    secret: hospitalSecretKeyThatShouldBeAtLeast256BitsLongForHS256Algorithm
+    secret: aG9zcGl0YWxTZWNyZXRLZXlUaGF0U2hvdWxkQmVBdExlYXN0MjU2Qml0c0xvbmdGb3JIUzI1NkFsZ29yaXRobQ==
     expiration: 86400000 # 24 hours in milliseconds
