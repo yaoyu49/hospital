@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Hospital Outpatient API
+  version: 0.1.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/auth/login:
+    post:
+      summary: 用户登录
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: username: {type: string} password: {type: string}
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: accessToken: {type: string} refreshToken: {type: string}
+  /api/patients:
+    get:
+      summary: 查询患者
+      parameters:
+        - in: query
+          name: keyword
+          schema: {type: string}
+        - in: query
+          name: page
+          schema: {type: integer, default: 0}
+        - in: query
+          name: size
+          schema: {type: integer, default: 20}
+      responses:
+        "200":
+          description: OK
+    post:
+      summary: 新增患者
+      responses:
+        "201": {description: Created}
+  /api/encounters:
+    post:
+      summary: 开始就诊（创建就诊）
+      responses: {"201": {description: Created}}
+  /api/prescriptions:
+    post:
+      summary: 开立处方
+      responses: {"201": {description: Created}}
+  /api/orders/lab:
+    post:
+      summary: 提交检验申请
+      responses: {"201": {description: Created}}
+  /api/bills:
+    post:
+      summary: 生成账单
+      responses: {"201": {description: Created}}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
