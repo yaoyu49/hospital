@@ -1,9 +1,0 @@
-com/hospital/controller/RegistrationController$CreateRegistrationRequest.class
-com/hospital/repository/RegistrationRepository.class
-com/hospital/service/RegistrationService$BatchCancelResult.class
-com/hospital/model/Registration$RegistrationStatus.class
-com/hospital/controller/RegistrationController$BatchCancelRequest.class
-com/hospital/model/Registration.class
-com/hospital/service/RegistrationService.class
-com/hospital/HospitalApplication.class
-com/hospital/controller/RegistrationController.class
